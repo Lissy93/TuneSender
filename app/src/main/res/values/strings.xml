@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TuneSender</string>
+    <string name="action_settings">Settings</string>
+    <string name="strTitle">Tune Sender</string>
+    <string name="strPhoneNumLabel">Send to</string>
+    <string name="strPhoneNumHint">Enter Mobile Number</string>
+    <string name="strTuneLabel">Tune to Play</string>
+    <string name="strTuneHint">Enter New Raw Tune</string>
+    <string name="strValidateButton">Validate</string>
+    <string name="strPreviewButton">Preview</string>
+    <string name="strSendButton">Send</string>
+</resources>
