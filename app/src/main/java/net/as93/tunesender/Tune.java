@@ -36,7 +36,7 @@ public class Tune {
      * @return true if tune is valid and could be played, or false if invalid
      */
     public boolean isTuneValid(){
-        return rawTune.matches("^([1-4|6|8][A-Ga-g][bB#]*[0-9](\\s)?){1,12}$");
+        return rawTune.matches("^([1-4|6|8][A-G][b#]?[0-9](\\s)?){1,12}$");
     }
 
 
@@ -81,7 +81,7 @@ public class Tune {
          */
         protected boolean isToneValid() {
             whyIsToneInvalid(); // Sets parent class var with message for user
-            return strTone.matches("^[1-4|6|8][A-Ga-g][bB#]*[0-9]$");
+            return strTone.matches("^[1-4|6|8][A-G][b#]?[0-9]$");
         }
 
 
