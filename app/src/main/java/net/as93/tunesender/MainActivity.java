@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText txtRawTune;
     private EditText txtPhoneNumber;
 
+    private Tune lastTune = null;
+
     private static final String SMS_RECEIVED =
             "android.provider.Telephony.SMS_RECEIVED";
 
@@ -58,14 +60,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch(v.getId()){
             case(R.id.fab): // The fab button was pressed
-                showMessage(v, "No New SMS Tunes");
+                if(lastTune!=null){ showPlayTune(lastTune, "Replay Tune"); }
+                else{ showMessage(v, "No New SMS Tunes"); }
                 break;
             case(R.id.btnValidate): // The validate input sms button
                 showMessage(v, currentTune.getTuneValidityStatus());
                 break;
             case(R.id.btnPreview): // The preview raw input button
-                if(currentTune.isTuneValid()) {
-                    showPlayTune(currentTune, "Preview Tune");
+                if(currentTune.isTuneValid()) { showPlayTune(currentTune, "Preview Tune");
                 }
                 else{ showMessage(v, currentTune.getTuneValidityStatus()); }
                 break;
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             boolean success = sendTune.sendSMS(phoneNum); // Send the SMS!!
             if(success){ showMessage(v, "Message sent successfully");} // :)
             else{ showMessage(v, "Error sending message");} // :(
+            txtRawTune.setText(""); // Reset the tune input field
         }
     }
 
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Tune potentialTune = new Tune(messageText);
                 if(potentialTune.isTuneValid()){
                     showPlayTune(potentialTune, "Tune Received");
+                    lastTune = potentialTune;
                 }
             }
         }
