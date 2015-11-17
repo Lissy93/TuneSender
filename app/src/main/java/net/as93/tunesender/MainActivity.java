@@ -50,17 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //TODO
                 break;
             case(R.id.btnSend): // The send sms button
-                if(currentTune.isTuneValid()){
-                    SendTune sendTune = new SendTune(currentTune);
-                    sendTune.sendSMS();
-                    showMessage(v, "Sending SMS...");
-                }
-                else{ // dou! that tune wasn't valid
-                    showMessage(v, "Unable to send SMS, tune not valid. \n"
-                            +currentTune.getTuneValidityStatus());
-                }
+                sendTheMessage(v, currentTune);
                 break;
-
         }
 
     }
@@ -74,5 +65,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
     }
+
+
+    /**
+     * Checks to see if a phone number vaguely looks
+     * like it could  possibly maybe be valid.
+     */
+    private boolean isPhoneNumValid(String phoneNum){
+        return phoneNum.matches("^[0|\\+4{2}]7[0-9]{9}");
+    }
+
+
+    /**
+     * Checks the phone number and SMS message
+     * if everything cool, creates sms sending class and sends sms
+     * then notifies the user that everything is done
+     * @param v current View
+     * @param currentTune Tune current tune
+     */
+    private void sendTheMessage(View v, Tune currentTune){
+        String phoneNum = txtPhoneNumber.getText().toString(); // Get phone num
+
+        if(!isPhoneNumValid(phoneNum)){ // phone num not looking good
+            showMessage(v, "Please enter a valid mobile number");
+        }
+        else if(!currentTune.isTuneValid()){ // dou! that tune no valid
+            showMessage(v, "Unable to send SMS, tune not valid. \n"
+                    +currentTune.getTuneValidityStatus());
+        }
+        else{ // Okay, everything looks cool, ready to send the SMS
+            showMessage(v, "Sending SMS..."); // Start of by showing message
+            SendTune sendTune = new SendTune(currentTune); // Create sms class
+            boolean success = sendTune.sendSMS(phoneNum); // Send the SMS!!
+            if(success){ showMessage(v, "Message sent successfully");} // :)
+            else{ showMessage(v, "Error sending message");} // :(
+        }
+    }
+
 
 }
