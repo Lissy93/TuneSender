@@ -50,7 +50,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //TODO
                 break;
             case(R.id.btnSend): // The send sms button
-                //TODO
+                if(currentTune.isTuneValid()){
+                    SendTune sendTune = new SendTune(currentTune);
+                    sendTune.sendSMS();
+                    showMessage(v, "Sending SMS...");
+                }
+                else{ // dou! that tune wasn't valid
+                    showMessage(v, "Unable to send SMS, tune not valid. \n"
+                            +currentTune.getTuneValidityStatus());
+                }
                 break;
 
         }

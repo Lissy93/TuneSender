@@ -15,6 +15,9 @@ public class Tune {
         this.rawTune = rawTune;
     }
 
+    public String getRawTune() {
+        return rawTune;
+    }
 
     /**
      * Getter for tuneValiityStatus class variable
