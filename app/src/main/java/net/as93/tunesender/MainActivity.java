@@ -64,8 +64,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showMessage(v, currentTune.getTuneValidityStatus());
                 break;
             case(R.id.btnPreview): // The preview raw input button
-                if(currentTune.isTuneValid()) { showPlayTune(currentTune); }
-                else{showMessage(v, currentTune.getTuneValidityStatus());}
+                if(currentTune.isTuneValid()) {
+                    showPlayTune(currentTune, "Preview Tune");
+                }
+                else{ showMessage(v, currentTune.getTuneValidityStatus()); }
                 break;
             case(R.id.btnSend): // The send sms button
                 sendTheMessage(v, currentTune);
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Is this a tune? (or is it your mum telling u it's dinner time)
                 Tune potentialTune = new Tune(messageText);
                 if(potentialTune.isTuneValid()){
-                    showPlayTune(potentialTune);
+                    showPlayTune(potentialTune, "Tune Received");
                 }
             }
         }
@@ -146,9 +148,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Displays a new Tune dialog passing in the raw tune to be played
      * @param tune Tune object
+     * @param title the String title of dialog (Tune Relieved | Preview Tune )
      */
-    private void showPlayTune(Tune tune){
-        DialogFragment playTuneDialog = PlayTune.newInstance(this, tune.getRawTune());
+    private void showPlayTune(Tune tune, String title){
+        DialogFragment playTuneDialog
+                = PlayTune.newInstance(this, tune.getRawTune(), title);
         playTuneDialog.show(this.getFragmentManager(), tune.getRawTune());
     }
 
