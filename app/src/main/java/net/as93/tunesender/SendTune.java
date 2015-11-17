@@ -1,6 +1,5 @@
 package net.as93.tunesender;
 
-
 import android.telephony.SmsManager;
 
 public class SendTune {

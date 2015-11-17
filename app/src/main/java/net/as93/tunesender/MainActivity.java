@@ -1,5 +1,6 @@
 package net.as93.tunesender;
 
+import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -132,11 +133,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SmsMessage message = SmsMessage.createFromPdu((byte[]) pduObj);
                 String messageText = message.getMessageBody(); // Get text from SMS
                 // Is this a tune? (or is it your mum telling u it's dinner time)
-                if(new Tune(messageText).isTuneValid()){ 
-                    // Woo TODO
+                Tune potentialTune = new Tune(messageText);
+                if(potentialTune.isTuneValid()){
+                    showPlayTune(potentialTune);
                 }
             }
         }
     }
+
+
+    /**
+     * Displays a new Tune dialog passing in the raw tune to be played
+     * @param tune Tune object
+     */
+    private void showPlayTune(Tune tune){
+        DialogFragment playTuneDialog = PlayTune.newInstance(this, tune.getRawTune());
+        playTuneDialog.show(this.getFragmentManager(), tune.getRawTune());
+    }
+
 
 }
