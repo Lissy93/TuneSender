@@ -27,7 +27,7 @@ public class Tune {
         return tuneValidityStatus;
     }
 
-    
+
     /**
      * Checks the syntax of the raw tune message to determine if it is valid
      * @return true if tune is valid and could be played, or false if invalid
@@ -60,12 +60,13 @@ public class Tune {
 
         private int duration;
         private char note;
-        private char pitchSymbol;
-        private int pitch;
+        private String pitch;
 
         protected Tone(String strTone) {
             this.strTone = strTone;
-            makeToneFromStr(); // Sets the class variables with components
+            if(isTuneValid()) {
+                makeToneFromStr(); // Sets the class variables with components
+            }
         }
 
 
@@ -114,8 +115,16 @@ public class Tune {
             }
         }
 
-        private void makeToneFromStr(){
 
+        /**
+         * Breaks the raw tone string down into individual components
+         * @pre raw tone must be valid
+         * @post the inner class variables of tone will have values
+         */
+        private void makeToneFromStr(){
+            this.duration = Integer.parseInt(strTone.substring(0, 1));
+            this.note = strTone.charAt(1);
+            this.pitch = strTone.substring(2,strTone.length());
         }
     }
 
