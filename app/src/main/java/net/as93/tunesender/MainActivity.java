@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showMessage(v, currentTune.getTuneValidityStatus());
                 break;
             case(R.id.btnPreview): // The preview raw input button
-                //TODO
+                if(currentTune.isTuneValid()) { showPlayTune(currentTune); }
+                else{showMessage(v, currentTune.getTuneValidityStatus());}
                 break;
             case(R.id.btnSend): // The send sms button
                 sendTheMessage(v, currentTune);
