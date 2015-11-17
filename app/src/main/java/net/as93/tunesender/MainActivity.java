@@ -1,9 +1,14 @@
 package net.as93.tunesender;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsMessage;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,13 +17,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText txtRawTune;
     private EditText txtPhoneNumber;
 
+    private static final String SMS_RECEIVED =
+            "android.provider.Telephony.SMS_RECEIVED";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // Set XML layout for main view
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar)); // toolbar
 
-        // Set text inputs to class variables
+        // Assign text inputs to class variables
         txtRawTune = (EditText)findViewById(R.id.txtRawTune);
         txtPhoneNumber = (EditText)findViewById(R.id.txtPhoneNum);
 
@@ -27,6 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnValidate).setOnClickListener(this);
         findViewById(R.id.btnPreview).setOnClickListener(this);
         findViewById(R.id.btnSend).setOnClickListener(this);
+
+        // Tune Reliever
+        RecipeTune tuneReceiver = new RecipeTune();
+        IntentFilter filter = new IntentFilter(SMS_RECEIVED);
+        registerReceiver(tuneReceiver, filter);
+
+
     }
 
 
@@ -102,5 +118,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    /**
+     * BroadcastReceiver inner class listens for SMS messages
+     * The checks if it's a Tune, before calling the showTune dialog
+     */
+    private class RecipeTune extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            Object[] pdus = (Object[]) bundle.get("pdus");
+            for (Object pduObj:pdus) {
+                SmsMessage message = SmsMessage.createFromPdu((byte[]) pduObj);
+                String messageText = message.getMessageBody(); // Get text from SMS
+                // Is this a tune? (or is it your mum telling u it's dinner time)
+                if(new Tune(messageText).isTuneValid()){ 
+                    // Woo TODO
+                }
+            }
+        }
+    }
 
 }
