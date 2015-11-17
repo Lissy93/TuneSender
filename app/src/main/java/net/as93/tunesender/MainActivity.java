@@ -44,12 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showMessage(v, "No New SMS Tunes");
                 break;
             case(R.id.btnValidate): // The validate input sms button
-                if(currentTune.isTuneValid()){
-                    showMessage(v, "Tune is Valid");
-                }
-                else{
-                    showMessage(v, "Tune is not in a valid format");
-                }
+                showMessage(v, currentTune.getTuneValidityStatus());
                 break;
             case(R.id.btnPreview): // The preview raw input button
                 //TODO
