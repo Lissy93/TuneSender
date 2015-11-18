@@ -31,6 +31,7 @@ public class TuneValidTest {
                 "6C 5", // Invalid scientific pitch notation (wSpace)
                 "6CB",  // Invalid scientific pitch notation (no num)
                 "6C##", // Invalid scientific pitch notation (Double hash)
+                "6C##5",// Invalid scientific pitch notation (Double hash with num)
                 "6C",   // Forgot scientific pitch notation
         };
 

@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         RecipeTune tuneReceiver = new RecipeTune();
         IntentFilter filter = new IntentFilter(SMS_RECEIVED);
         registerReceiver(tuneReceiver, filter);
-
-
     }
 
 
