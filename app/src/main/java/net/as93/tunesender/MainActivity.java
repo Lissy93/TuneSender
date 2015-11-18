@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public Tune getLastTune() {
+        return lastTune;
+    }
+
     /**
      * Displays the Android Snackbar with a specified message
      * @param view the current view to display bar in
@@ -140,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Tune potentialTune = new Tune(messageText);
                 if(potentialTune.isTuneValid()){
                     showPlayTune(potentialTune, "Tune Received");
-                    lastTune = potentialTune;
                 }
             }
         }
@@ -153,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param title the String title of dialog (Tune Relieved | Preview Tune )
      */
     private void showPlayTune(Tune tune, String title){
+        lastTune = tune;
         DialogFragment playTuneDialog
                 = PlayTune.newInstance(this, tune.getRawTune(), title);
         playTuneDialog.show(this.getFragmentManager(), tune.getRawTune());
