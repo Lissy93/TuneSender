@@ -11,7 +11,7 @@ public class Tone{
 
     private int duration;   // (1|2|3|4|6|8)
     private char note;      // (A|B|C|D|E|F|G)
-    private char notation;  // (b|#)
+    private char notation;  // (b|#|x)
     private int pitch;      // (4|5|6)
 
     protected Tone(String strTone) {
@@ -97,6 +97,9 @@ public class Tone{
     private void makeToneFromStr(){
         this.duration = Integer.parseInt(strTone.substring(0, 1));
         this.note = strTone.charAt(1);
-        this.pitch = Integer.parseInt(strTone.substring(2,strTone.length()));
+        this.pitch = Integer.parseInt(""+strTone.charAt(strTone.length()-1));
+        if(strTone.contains("b")) this.notation = 'b';
+        else if(strTone.contains("#")) this.notation = '#';
+        else this.notation = 'x';
     }
 }
