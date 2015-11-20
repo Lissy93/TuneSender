@@ -18,6 +18,21 @@ public class Tone{
         makeToneFromStr(); // Sets the class variables with components
     }
 
+    public String getStrTone() {
+        return strTone;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public char getNote() {
+        return note;
+    }
+
+    public String getPitch() {
+        return pitch;
+    }
 
     /**
      * Checks that a tone is of a valid format, including:
