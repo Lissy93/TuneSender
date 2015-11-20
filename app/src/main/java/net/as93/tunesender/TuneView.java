@@ -19,30 +19,24 @@ public class TuneView extends View {
     public TuneView(Context context) {
         super(context);
         tune = ((MainActivity)context).getLastTune();
-        assignBitmaps();    
+        assignBitmaps();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // TODO you can use tune to get the notes ready to display on the stave
+        canvas.drawBitmap(bitmaps.get("stave"), null, new Rect(0,150,900,400), null);
+        canvas.drawBitmap(bitmaps.get("trebleClef"), null, new Rect(10,170,100,380), null);
 
-        Bitmap stave = BitmapFactory
-                .decodeResource(getContext().getResources(), R.drawable.stave);
-
-        Bitmap crotchetDown = BitmapFactory
-                .decodeResource(getContext().getResources(), R.drawable.crotchet_down);
-
-        canvas.drawBitmap(stave, null, new Rect(0,150,900,400), null);
-
-        int distance = 70;  // The distance between each note
-        int width = 70;     // The width of each note
+        int distance = 80;  // The distance between each note
+        int width = 80;     // The width of each note
         int height = 190;   // The fixed height of each NORMAL note
-        int top = 160;
-        int left = 50;      // The left position (will be incremented by width)
+        int top = 160;      // Distance from top
+        int left = 120;     // The left position (will be incremented by width)
 
         for(Tone tone: tune.getTones()){
+            top = getTop(tone.getNote());
             Rect r = new Rect(left,top,left+width,top+height);
             canvas.drawBitmap(getNoteFromDuration(tone.getDuration()), null, r, null);
             left +=distance;
@@ -54,22 +48,31 @@ public class TuneView extends View {
 
     private Bitmap getNoteFromDuration(int duration){
         switch (duration){
-            case(1):
-                return bitmaps.get("crotchetDown");
-            case(2):
-                return bitmaps.get("dottedCrotchetDown");
-            case(3):
-                return bitmaps.get("dottedMinimDown");
-            case(4):
-                return bitmaps.get("quaverDown");
-            default:
-                return bitmaps.get("minimDown");
+            case(1): return bitmaps.get("quaverDown");
+            case(2): return bitmaps.get("crotchetDown");
+            case(3): return bitmaps.get("dottedCrotchetDown");
+            case(4): return bitmaps.get("minimDown");
+            case(6): return bitmaps.get("dottedMinimDown");
+            case(8): return bitmaps.get("semibreve");
+            default: return bitmaps.get("quaverDown");
         }
+    }
 
+    private int getTop(char note){
+        switch (note){
+            case('a'): return 160;
+            case('b'): return 160;
+            case('c'): return 160;
+            case('d'): return 160;
+            case('e'): return 160;
+            case('f'): return 160;
+            default: return 160;
+        }
     }
 
     private void assignBitmaps(){
         bitmaps.put("stave", makeBitmap(R.drawable.stave));
+        bitmaps.put("trebleClef", makeBitmap(R.drawable.treble_clef));
         bitmaps.put("crotchetDown", makeBitmap(R.drawable.crotchet_down));
         bitmaps.put("crotchetUp", makeBitmap(R.drawable.crotchet_up));
         bitmaps.put("dottedCrotchetDown", makeBitmap(R.drawable.dotted_crotchet_down));
