@@ -15,19 +15,22 @@ public class TuneView extends View {
 
     private Tune tune;
     private HashMap<String, Bitmap> bitmaps = new HashMap<>();
+    private HashMap<String, Integer> notePositions = new HashMap<>();
+    private char[] notes = new char[]{'A','B','C','D','E','F','G'};
 
     public TuneView(Context context) {
         super(context);
         tune = ((MainActivity)context).getLastTune();
         assignBitmaps();
+        assignNotePositions();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(bitmaps.get("stave"), null, new Rect(0,150,900,400), null);
-        canvas.drawBitmap(bitmaps.get("trebleClef"), null, new Rect(10,170,100,380), null);
+        canvas.drawBitmap(bitmaps.get("stave"), null, new Rect(0,155,900,400), null);
+        canvas.drawBitmap(bitmaps.get("trebleClef"), null, new Rect(10,175,100,385), null);
 
         int distance = 80;  // The distance between each note
         int width = 80;     // The width of each note
@@ -36,7 +39,7 @@ public class TuneView extends View {
         int left = 120;     // The left position (will be incremented by width)
 
         for(Tone tone: tune.getTones()){
-            top = getTop(tone.getNote());
+            top = getTop(tone.getNote(), tone.getPitch());
             Rect r = new Rect(left,top,left+width,top+height);
             canvas.drawBitmap(getNoteFromDuration(tone.getDuration()), null, r, null);
             left +=distance;
@@ -58,16 +61,11 @@ public class TuneView extends View {
         }
     }
 
-    private int getTop(char note){
-        switch (note){
-            case('a'): return 160;
-            case('b'): return 160;
-            case('c'): return 160;
-            case('d'): return 160;
-            case('e'): return 160;
-            case('f'): return 160;
-            default: return 160;
-        }
+    private int getTop(char note, int pitch){
+        //                             A   B   C   D   E   F
+        //int[] positions = new int[]{270,245,220,195,170,145};
+        return notePositions.get(""+note+pitch);
+
     }
 
     private void assignBitmaps(){
@@ -86,6 +84,15 @@ public class TuneView extends View {
         bitmaps.put("semibreve", makeBitmap(R.drawable.semibreve));
     }
 
+    private void assignNotePositions(){
+        int position = 0;
+        for(int i =4; i<=6; i++){
+            for(char note: notes){
+                notePositions.put(""+note+i, position);
+                position += 25;
+            }
+        }
+    }
 
     private Bitmap makeBitmap(int res){
         return BitmapFactory.decodeResource(getContext().getResources(), res);

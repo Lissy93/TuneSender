@@ -9,9 +9,10 @@ public class Tone{
 
     private String strTone;
 
-    private int duration;
-    private char note;
-    private String pitch;
+    private int duration;   // (1|2|3|4|6|8)
+    private char note;      // (A|B|C|D|E|F|G)
+    private char notation;  // (b|#)
+    private int pitch;      // (4|5|6)
 
     protected Tone(String strTone) {
         this.strTone = strTone;
@@ -30,8 +31,12 @@ public class Tone{
         return note;
     }
 
-    public String getPitch() {
+    public int getPitch() {
         return pitch;
+    }
+
+    public char getNotation() {
+        return notation;
     }
 
     /**
@@ -92,6 +97,6 @@ public class Tone{
     private void makeToneFromStr(){
         this.duration = Integer.parseInt(strTone.substring(0, 1));
         this.note = strTone.charAt(1);
-        this.pitch = strTone.substring(2,strTone.length());
+        this.pitch = Integer.parseInt(strTone.substring(2,strTone.length()));
     }
 }
