@@ -48,7 +48,7 @@ public class Tune {
      * @return true if tune is valid and could be played, or false if invalid
      */
     public boolean isTuneValid(){
-        return rawTune.matches("^([1-4|6|8][A-G][b#]?[0-9](\\s)?){1,12}$");
+        return rawTune.matches("^([1-4|6|8][A-G][b#]?[4-6](\\s)?){1,12}$");
     }
 
 
