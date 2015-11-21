@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
             android:id="@+id/tuneLayout"
-            tools:context="net.as93.tunesender.PlayTune"
+            tools:context="net.as93.tunesender.ViewTune"
             android:maxHeight="450dp">
 
 

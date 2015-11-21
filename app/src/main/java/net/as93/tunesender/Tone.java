@@ -2,6 +2,7 @@ package net.as93.tunesender;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,14 +10,19 @@ public class Tone{
 
     private String strTone;
 
+    private double quaverDuration = 0.5;
+
     private int duration;   // (1|2|3|4|6|8)
     private char note;      // (A|B|C|D|E|F|G)
     private char notation;  // (b|#|x)
     private int pitch;      // (4|5|6)
 
+    private HashMap<String, Double> frequencies = new HashMap<>();
+
     protected Tone(String strTone) {
         this.strTone = strTone;
         makeToneFromStr(); // Sets the class variables with components
+        makeFrequencyLookup();
     }
 
     public String getStrTone() {
@@ -37,6 +43,16 @@ public class Tone{
 
     public char getNotation() {
         return notation;
+    }
+
+    public double getPlayableDuration(){
+        return duration * quaverDuration;
+    }
+
+    public double getFrequency(){
+        Double d = frequencies.get(strTone.substring(1));
+        if(d == null) return 0;
+        else return d;
     }
 
     /**
@@ -67,7 +83,7 @@ public class Tone{
                 new String[]{"A", "B", "C", "D", "E", "F", "G"}
         ));
 
-        strTone.replaceAll("\\s+",""); // Remove training white spaces
+        strTone.replaceAll("\\s+", ""); // Remove training white spaces
 
         if(strTone.length() < 3){
             tuneValidityStatus = "Notes must be at least 3 characters";
@@ -103,5 +119,46 @@ public class Tone{
             else if (strTone.contains("#")) this.notation = '#';
             else this.notation = 'x';
         }
+    }
+
+    private void makeFrequencyLookup(){
+        frequencies.put("C4", 261.6);
+        frequencies.put("C#4", 277.2);
+        frequencies.put("D4", 293.7);
+        frequencies.put("Eb4", 311.1);
+        frequencies.put("E4", 329.6);
+        frequencies.put("F4", 349.2);
+        frequencies.put("F#4", 370.0);
+        frequencies.put("G4", 392.0);
+        frequencies.put("G#4", 415.3);
+        frequencies.put("G#4", 440.0);
+        frequencies.put("Bb4", 466.2);
+        frequencies.put("B4", 493.9);
+
+        frequencies.put("C5", 523.3);
+        frequencies.put("C#5", 554.4);
+        frequencies.put("D5", 587.3);
+        frequencies.put("Eb5", 622.3);
+        frequencies.put("E5", 659.3);
+        frequencies.put("F5", 698.5);
+        frequencies.put("F#5", 740.0);
+        frequencies.put("G5", 784.0);
+        frequencies.put("G#5", 830.6);
+        frequencies.put("G#5", 880.0);
+        frequencies.put("Bb5", 932.3);
+        frequencies.put("B5", 987.8);
+
+        frequencies.put("C6", 1047.0);
+        frequencies.put("C#6", 1109.0);
+        frequencies.put("D6", 1175.0);
+        frequencies.put("Eb6", 1245.0);
+        frequencies.put("E6", 1319.0);
+        frequencies.put("F6", 1397.0);
+        frequencies.put("F#6", 1480.0);
+        frequencies.put("G6", 1568.0);
+        frequencies.put("G#6", 1661.0);
+        frequencies.put("G#6", 1760.0);
+        frequencies.put("Bb6", 1865.0);
+        frequencies.put("B6", 1976.0);
     }
 }

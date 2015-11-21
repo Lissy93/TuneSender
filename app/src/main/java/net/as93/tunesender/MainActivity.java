@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showPlayTune(Tune tune, String title){
         lastTune = tune;
         DialogFragment playTuneDialog
-                = PlayTune.newInstance(this, tune.getRawTune(), title);
+                = ViewTune.newInstance(this, tune.getRawTune(), title);
         playTuneDialog.show(this.getFragmentManager(), tune.getRawTune());
     }
 
