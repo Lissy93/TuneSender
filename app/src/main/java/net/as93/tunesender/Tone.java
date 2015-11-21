@@ -10,7 +10,7 @@ public class Tone{
 
     private String strTone;
 
-    private double quaverDuration = 0.5;
+    private double quaverDuration = 0.25; // In seconds
 
     private int duration;   // (1|2|3|4|6|8)
     private char note;      // (A|B|C|D|E|F|G)
@@ -19,36 +19,59 @@ public class Tone{
 
     private HashMap<String, Double> frequencies = new HashMap<>();
 
+
     protected Tone(String strTone) {
         this.strTone = strTone;
         makeToneFromStr(); // Sets the class variables with components
         makeFrequencyLookup();
     }
 
-    public String getStrTone() {
-        return strTone;
-    }
 
+    /**
+     * Getter for duration
+     * @return int duration of note
+     */
     public int getDuration() {
         return duration;
     }
 
+    /**
+     * Getter for Note letter
+     * @return char note (A|B|C|D|E|F|G)
+     */
     public char getNote() {
         return note;
     }
 
+    /**
+     * Getter for pitch
+     * @return int pitch (4|5|6)
+     */
     public int getPitch() {
         return pitch;
     }
 
+    /**
+     * Getter for notation
+     * @return char notation (b|#|x)
+     */
     public char getNotation() {
         return notation;
     }
 
+    /**
+     * Gets how long the note should be played based
+     * on quaver duration and user specified duration
+     * @return double duration (min = quaverDuration, max = 8 * quaverDuration)
+     */
     public double getPlayableDuration(){
         return duration * quaverDuration;
     }
 
+    /**
+     * Gets the frequency for playing the note from the table
+     * @return double frequency (min=261.6, max=1976.0)
+     */
     public double getFrequency(){
         Double d = frequencies.get(strTone.substring(1));
         if(d == null) return 0;
@@ -121,6 +144,10 @@ public class Tone{
         }
     }
 
+    /**
+     * Adds frequency values to the hashmap
+     * TODO there must be a better way of doing this?
+     */
     private void makeFrequencyLookup(){
         frequencies.put("C4", 261.6);
         frequencies.put("C#4", 277.2);

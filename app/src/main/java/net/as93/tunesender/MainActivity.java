@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Getter for the last tune
+     * @return Tune the last tune played or received
+     */
     public Tune getLastTune() {
         return lastTune;
     }

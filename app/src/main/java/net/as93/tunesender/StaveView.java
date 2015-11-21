@@ -68,6 +68,12 @@ public class StaveView extends View {
     }
 
 
+    /**
+     * Returns a Bitmap image for a given note based on duration and orientation
+     * @param duration integer value of duration
+     * @param direction ("Up"|"Down") which way should the tail be pointing
+     * @return Bitmap resource
+     */
     private Bitmap getBitmapFromDuration(int duration, String direction){
         switch (duration){
             case(1): return bitmaps.get("quaver"+direction);
@@ -80,10 +86,20 @@ public class StaveView extends View {
         }
     }
 
+    /**
+     * Calculates the top coordinate based on the note and pitch
+     * @param note char
+     * @param pitch int
+     * @return int coordinate
+     */
     private int getTop(char note, int pitch){
         return notePositions.get(""+note+pitch);
     }
 
+
+    /**
+     * Just assigns bitmap value to the HashMap for looking up later
+     */
     private void assignBitmaps(){
         bitmaps.put("stave", makeBitmap(R.drawable.stave));
         bitmaps.put("trebleClef", makeBitmap(R.drawable.treble_clef));
@@ -102,6 +118,11 @@ public class StaveView extends View {
         bitmaps.put("sharp", makeBitmap(R.drawable.sharp));
     }
 
+
+    /**
+     * Assigns the upper position of each note to a HashMap
+     * 21 values in total
+     */
     private void assignNotePositions(){
         int position = 0;
         for(int i =4; i<=6; i++){
@@ -112,10 +133,22 @@ public class StaveView extends View {
         }
     }
 
+    /**
+     * Returns the generated Bitmap resource for an image with given ID
+     * @param res the id of the image
+     * @return The bitmap
+     */
     private Bitmap makeBitmap(int res){
         return BitmapFactory.decodeResource(getContext().getResources(), res);
     }
 
+
+    /**
+     * Determines if a note is upy or downy based on it's pitch
+     * @param note the char note
+     * @param pitch the int pith
+     * @return (Up|Down)
+     */
     private String isUpOrDown(char note, int pitch){
         if(notePositions.get(""+note+pitch)>226) return "Up";
         else return "Down";

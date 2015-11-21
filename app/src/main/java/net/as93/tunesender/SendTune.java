@@ -10,6 +10,12 @@ public class SendTune {
         this.tune = tune;
     }
 
+
+    /**
+     * Sends the SMS
+     * @param phoneNo the users phone number to send it to
+     * @return true if sent was successful, else false
+     */
     public boolean sendSMS(String phoneNo){
         try {
             SmsManager smsManager = SmsManager.getDefault();

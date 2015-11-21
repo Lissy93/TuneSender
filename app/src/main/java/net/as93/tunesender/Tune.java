@@ -27,10 +27,6 @@ public class Tune {
     }
 
 
-    public void setTuneValidityStatus(String tuneValidityStatus) {
-        this.tuneValidityStatus = tuneValidityStatus;
-    }
-
     /**
      * Getter for tuneValiityStatus class variable
      * String description of if tune is valid

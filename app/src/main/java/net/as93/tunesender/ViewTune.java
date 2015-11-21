@@ -2,9 +2,6 @@ package net.as93.tunesender;
 
 import android.app.DialogFragment;
 import android.content.Context;
-import android.media.AudioFormat;
-import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +23,12 @@ public class ViewTune extends DialogFragment{
         getDialog().setTitle(getArguments().getString("TITLE"));
         View v =  inflater.inflate(R.layout.fragment_play_tune, container, false);
 
+        // Add the Stave View
         RelativeLayout layout = (RelativeLayout)v.findViewById(R.id.tuneLayout);
         View child = new StaveView(getActivity());
         layout.addView(child);
 
+        // Call PlayTone on button press
         final Button button = (Button) v.findViewById(R.id.btnPlayTune);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -56,6 +55,12 @@ public class ViewTune extends DialogFragment{
         return viewTuneDialog;
     }
 
+
+    /**
+     * Creates an instance of the PlaySound class,
+     * then plays a sound for every valid tone
+     * @param tune Tune object containing a list of Tones
+     */
     private void playTune(Tune tune){
         System.out.print(tune.getRawTune());
         PlaySound playSound = new PlaySound();
@@ -65,6 +70,5 @@ public class ViewTune extends DialogFragment{
                 playSound.play(tone.getPlayableDuration(), frequency);
         }
     }
-
 
 }
