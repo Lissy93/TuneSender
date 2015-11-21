@@ -2,22 +2,15 @@ package net.as93.tunesender;
 
 import android.app.DialogFragment;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 
 public class PlayTune extends DialogFragment{
-
-    ImageView staveImageView;
-    Context c;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,15 +21,21 @@ public class PlayTune extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().setTitle(getArguments().getString("TITLE"));
-//        View v =  inflater.inflate(R.layout.fragment_play_tune, container, false);
+        View v =  inflater.inflate(R.layout.fragment_play_tune, container, false);
 
+        RelativeLayout layout = (RelativeLayout)v.findViewById(R.id.tuneLayout);
+        View child = new TuneView(getActivity());
+        layout.addView(child);
 
-        View v = new TuneView(getActivity());
+        final Button button = (Button) v.findViewById(R.id.btnPlayTune);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                playTune(((MainActivity) getActivity()).getLastTune());
+            }
+        });
 
         return v;
     }
-
-
 
 
     /**
@@ -52,6 +51,10 @@ public class PlayTune extends DialogFragment{
         args.putString("TITLE", t);
         playTuneDialog.setArguments(args);
         return playTuneDialog;
+    }
+
+    private void playTune(Tune tune){
+        System.out.print(tune.getRawTune());
     }
 
 

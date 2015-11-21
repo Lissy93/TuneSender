@@ -1,16 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="net.as93.tunesender.PlayTune">
-
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgStave"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal|center_vertical"/>
+             android:layout_height="wrap_content"
+            android:id="@+id/tuneLayout"
+            tools:context="net.as93.tunesender.PlayTune"
+            android:maxHeight="450dp">
 
 
     <Button
@@ -20,8 +14,7 @@
         android:id="@+id/btnPlayTune"
         android:background="@color/colorPrimaryDark"
         android:textColor="#FFF"
-        android:layout_below="@+id/imgStave"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="180dp"
         android:layout_marginBottom="20dp" />
 
 </RelativeLayout>

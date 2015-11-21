@@ -95,11 +95,13 @@ public class Tone{
      * @post the inner class variables of tone will have values
      */
     private void makeToneFromStr(){
-        this.duration = Integer.parseInt(strTone.substring(0, 1));
-        this.note = strTone.charAt(1);
-        this.pitch = Integer.parseInt(""+strTone.charAt(strTone.length()-1));
-        if(strTone.contains("b")) this.notation = 'b';
-        else if(strTone.contains("#")) this.notation = '#';
-        else this.notation = 'x';
+        if(isToneValid()) {
+            this.duration = Integer.parseInt(strTone.substring(0, 1));
+            this.note = strTone.charAt(1);
+            this.pitch = Integer.parseInt("" + strTone.charAt(strTone.length() - 1));
+            if (strTone.contains("b")) this.notation = 'b';
+            else if (strTone.contains("#")) this.notation = '#';
+            else this.notation = 'x';
+        }
     }
 }
