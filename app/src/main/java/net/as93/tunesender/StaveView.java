@@ -15,7 +15,8 @@ public class StaveView extends View {
     private Tune tune;
     private HashMap<String, Bitmap> bitmaps = new HashMap<>();
     private HashMap<String, Integer> notePositions = new HashMap<>();
-    private char[] notes = new char[]{'A','B','C','D','E','F','G'};
+    private char[] notes = new char[]{'C','D','E','F','G','A','B'};
+    private int lastTop = 200;
 
     public StaveView(Context context) {
         super(context);
@@ -43,9 +44,20 @@ public class StaveView extends View {
         // Draw each note in the tune
         for(Tone tone: tune.getTones()){
             String direction  = isUpOrDown(tone.getNote(), tone.getPitch());
-            Bitmap bitmap = getBitmapFromDuration(tone.getDuration(), direction);
-            int top = getTop(tone.getNote(), tone.getPitch());
+            Bitmap bitmap;
+            int top = lastTop = getTop(tone.getNote(), tone.getPitch());
             int bottom = top+height;
+
+            char symbol = tone.getNotation();
+            if(symbol =='b' || symbol == '#'){
+                if(symbol == 'b') bitmap = bitmaps.get("flat");
+                else bitmap = bitmaps.get("sharp");
+                Rect r2 = new Rect(left,lastTop-50,left+width,lastTop+50);
+                canvas.drawBitmap(bitmap, null, r2, null);
+                left += distance;
+            }
+
+            bitmap = getBitmapFromDuration(tone.getDuration(), direction);
             if(direction.equals("Up")){ // Display an upside down note
                 top = top - height + gap + dif;
                 bottom = bottom - height + dif;
@@ -54,16 +66,6 @@ public class StaveView extends View {
             canvas.drawBitmap(bitmap, null, r, null);
 
             left +=distance; // Increment the x coordinate for the next note
-
-            char symbol = tone.getNotation();
-            if(symbol =='b' || symbol == '#'){
-                if(symbol == 'b') bitmap = bitmaps.get("flat");
-                else bitmap = bitmaps.get("sharp");
-                Rect r2 = new Rect(left,200,left+width,300);
-                canvas.drawBitmap(bitmap, null, r2, null);
-                left += distance;
-            }
-
         }
     }
 
@@ -124,11 +126,11 @@ public class StaveView extends View {
      * 21 values in total
      */
     private void assignNotePositions(){
-        int position = 0;
-        for(int i =4; i<=6; i++){
+        int position = 575;
+        for(int i =3; i<=6; i++){
             for(char note: notes){
                 notePositions.put(""+note+i, position);
-                position += 25;
+                position -= 25;
             }
         }
     }
